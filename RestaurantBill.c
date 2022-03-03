@@ -6,83 +6,84 @@
 #include <stdlib.h>
 #include <time.h>
 
+//Functions being used
+void calcTax(float price, float rate);
+void calcTip(float price, float rate);
+int main();
+
 //Global variables
 const float salad = 9.95;
 const float soup = 4.55;
 const float sandwich = 13.25;
 const float pizza = 22.35;
 char mealChosen[10];
-float mealPrice;
-float total;
-float tax;
-float tip;
+float total = 0.0;
+float tax = 0.0;
+float tip = 0.0;
+float taxRate = 0.0;
+float tipRate = 0.0;
+float mealPrice = 0.0;
 
 /* Calculate Tax
-* Calculates the Tax given a price.
+* Calculates the Tax given a price and a rate.
 */
-float calcTax(float price, float rate){
+void calcTax(float price, float rate){
   float result;
-  float newRate = rate/100;
+  float newRate = rate / (float)100;
   result = price * newRate;
   total = total + result;
-  return result;
+  tax = result;
 }
 
 /* Calculate Tip
-* Calculates the Tip given a price. This should be calculated 
+* Calculates the Tip given a price and a rate. This should be calculated 
 * after calculating tax.
 */
-float calcTip(float price, float rate){
+void calcTip(float price, float rate){
   float result;
-  float newRate = rate/100;
+  float newRate = rate / (float)100;
   result = price * newRate;
   total = total + result;
-  return result;
+  tip = result;
 }
 
 //Main function
 int main(){
-  int taxRate;
-  int tipRate;
-  printf("Please enter the tax rate:");
-  scanf("%f", &taxRate);
-  printf("Number = %f", taxRate);
-  printf("Please enter the tip rate:");
-  scanf("%f", &tipRate);
-
   //Choose random 1-4 here 
   int mealSelect;
   srand((unsigned) time(NULL));
   mealSelect = rand()%((4+1)-1)+1;
   printf("%d price here", mealSelect);
 
+  //Input tax and tip rate
+  printf("Please enter the tax rate:");
+  scanf("%f", &taxRate);
+  printf("Please enter the tip rate:");
+  scanf("%f", &tipRate);
+
   //Calculating tax and tip depending on the meal chosen
   if(mealSelect == 1){
     total = salad;
-    mealPrice = salad;
+    mealPrice = total;
     strcpy(mealChosen, "Salad");
-    tax = calcTax(total, taxRate);
-    tip = calcTip(total, tipRate);
   }else if(mealSelect == 2){
     total = soup;
-    mealPrice = soup;
+    mealPrice = total;
     strcpy(mealChosen, "Soup");
-    tax = calcTax(total, taxRate);
-    tip = calcTip(total, tipRate);
   }else if (mealSelect == 3){
     total = sandwich;
-    mealPrice = sandwich;
+    mealPrice = total;
     strcpy(mealChosen, "Sandwich");
-    tax = calcTax(total, taxRate);
-    tip = calcTip(total, tipRate);
   }else{
     total = pizza;
-    mealPrice = pizza;
+    mealPrice = total;
     strcpy(mealChosen, "Pizza");
-    tax = calcTax(total, taxRate);
-    tip = calcTip(total, tipRate);
   }
 
+  calcTax(mealPrice, taxRate);
+  calcTip(total, tipRate);
+
   //Printing the result
-  printf("%s ($%.2d), tax: %.2d, tip: %.2d, total $%.2d", mealChosen, mealPrice, tax, tip, total);
+  printf("%s ($%.2f), tax: %.2f, tip: %.2f, total $%.2f", mealChosen, mealPrice, tax, tip, total);
+  return 0;
 }
