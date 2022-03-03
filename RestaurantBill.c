@@ -23,6 +23,7 @@ float calcTax(float price, float rate){
   float result;
   float newRate = rate/100;
   result = result * newRate;
+  total = total + result;
   return result;
 }
 
@@ -34,6 +35,7 @@ float calcTip(float price, float rate){
   float result;
   float newRate = rate/100;
   result = result * newRate;
+  total = total + result;
   return result;
 }
 
@@ -74,9 +76,6 @@ int main(){
     tip = calcTip(total, tipRate);
   }
 
-  //Calculating the total
-  total = total + tax + tip;
-
   //Printing the result
-  printf(mealChosen + "($" + mealPrice + "), tax: " + tax + "%, tip: " + tip + "%, total: $" + total);  
+  printf("%c ($%f), tax: %f, tip: %f, total $%f", mealChosen, mealPrice, tax, tip, total);
 }
